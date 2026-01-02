@@ -26,60 +26,6 @@ Alerting-ready architecture (Slack / PagerDuty compatible)
 
 Dockerized monitoring stack
 
-🏗️ System Architecture
-                   ┌──────────────────────┐
-                   │   Transaction Event  │
-                   └─────────┬────────────┘
-                             │
-                             ▼
-                 ┌──────────────────────────┐
-                 │   FastAPI Fraud Service   │
-                 │  (/predict, /metrics)    │
-                 └─────────┬────────────────┘
-                           │
-          ┌────────────────┼───────────────────┐
-          │                │                   │
-          ▼                ▼                   ▼
-┌────────────────┐ ┌────────────────┐ ┌──────────────────┐
-│ Online Features │ │ Fraud Risk ML  │ │ Prometheus       │
-│ (Real-time)    │ │ Model (GBM)    │ │ Metrics Scraping │
-└────────────────┘ └────────────────┘ └──────────────────┘
-          │                │                   │
-          ▼                ▼                   ▼
-┌───────────────────────────────┐     ┌──────────────────┐
-│ Evidently Drift Detection     │     │ Grafana Dashboards│
-│ (Reference vs Current Data)  │     └──────────────────┘
-└───────────────┬───────────────┘
-                │ Drift detected
-                ▼
-┌───────────────────────────────┐
-│ Auto Retraining Pipeline      │
-│ (MLflow + Model Registry)     │
-└───────────────────────────────┘
-
-📂 Project Structure
-real-time-fraud-detection-mlops/
-│
-├── src/
-│   ├── app.py                 # FastAPI inference service
-│   └── schemas.py             # Request/response schemas
-│
-├── training/
-│   ├── train.py               # Model training + MLflow logging
-│   └── retrain.py             # Auto-retraining trigger
-│
-├── monitoring/
-│   ├── drift.py               # Data drift detection
-│   ├── prometheus.yml         # Prometheus config
-│
-├── data/
-│   └── README.md              # Data schema (data excluded from git)
-│
-├── requirements.txt
-├── docker-compose.yml
-├── .gitignore
-└── README.md
-
 ⚙️ Tech Stack
 Component	Tool
 API	FastAPI
@@ -193,3 +139,4 @@ Kubernetes deployment
 Vaibhav Tiwari
 AI / ML Engineer — MLOps focused
 GitHub: https://github.com/tvaibhav619-web
+
