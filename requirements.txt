@@ -1,15 +1,7 @@
-python_version < 3.12
-numpy==1.26.4
-evidently==0.4.5
-pandas
 fastapi
 uvicorn
-lightgbm
-xgboost
-redis
-kafka-python
-prometheus-client
+numpy
 joblib
-requests
-shap
-matplotlib
+scikit-learn
+
+
