@@ -1,0 +1,30 @@
+groups:
+- name: fraud-alerts
+  rules:
+
+  - alert: FraudAPIDown
+    expr: up{job="fraud_api"} == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Fraud API is DOWN"
+      description: "FastAPI fraud detection service is not reachable."
+
+  - alert: HighFraudTraffic
+    expr: rate(fraud_requests_total[1m]) > 10
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High fraud request rate"
+      description: "Fraud API receiving unusually high traffic."
+
+  - alert: HighRiskSpike
+    expr: rate(fraud_risk_score_bucket{le="100"}[1m]) > 5
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High fraud risk spike"
+      description: "Many high-risk fraud scores detected."
