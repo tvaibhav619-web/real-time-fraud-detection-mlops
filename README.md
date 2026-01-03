@@ -1,142 +1,130 @@
-🛡️ Real-Time Fraud Detection System (MLOps)
+Real-Time Fraud Detection System with MLOps & Kubernetes
 
-A production-grade real-time fraud detection system built using modern MLOps best practices, featuring online inference, drift detection, auto-retraining, monitoring, alerting, and model governance.
+A production-grade real-time fraud detection system demonstrating the full MLOps lifecycle, from model training to containerized deployment on Kubernetes, with CI/CD, monitoring, and scalability.
+
+This project is designed to mirror real industry ML systems, not toy demos.
 
 🚀 Key Features
+🔹 Machine Learning
 
-Real-time fraud risk scoring (continuous probability, not binary)
+Probabilistic fraud risk scoring (not binary)
+
+Tree-based model (LightGBM / XGBoost style)
+
+Real-time inference via REST API
+
+🔹 MLOps
+
+Drift-aware design
+
+Auto-retraining ready architecture
+
+Model versioning compatible with MLflow
+
+CI-safe ML system design
+
+🔹 Engineering & DevOps
 
 FastAPI inference service
 
-LightGBM / XGBoost model
+Dockerized application
 
-Online feature ingestion
+Kubernetes deployment with replicas
 
-Data drift detection (Evidently)
-
-Automatic model retraining
-
-MLflow model registry
-
-Prometheus metrics
-
-Grafana dashboards
-
-Alerting-ready architecture (Slack / PagerDuty compatible)
-
-Dockerized monitoring stack
-
-⚙️ Tech Stack
-Component	Tool
-API	FastAPI
-ML Model	LightGBM / XGBoost
-Experiment Tracking	MLflow
-Drift Detection	Evidently
-Metrics	Prometheus
-Visualization	Grafana
-Containerization	Docker
-Language	Python 3.10
-▶️ How to Run the Project
-1️⃣ Create virtual environment
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-
-2️⃣ Install dependencies
-pip install -r requirements.txt
-
-3️⃣ Train & register model
-python training/train.py
-
-4️⃣ Start FastAPI service
-uvicorn src.app:app --reload
-
-
-Open Swagger UI:
-
-http://127.0.0.1:8000/docs
-
-📡 Monitoring Stack
-Start Prometheus
-docker run -d --name prometheus \
-  -p 9090:9090 \
-  -v ${PWD}/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml \
-  prom/prometheus
-
-Start Grafana
-docker run -d --name grafana -p 3000:3000 grafana/grafana
-
-
-Prometheus: http://localhost:9090
-
-Grafana: http://localhost:3000
-
-(default login: admin / admin)
-
-🔔 Alerting (Production-Ready)
-
-Prometheus alert rules can trigger:
-
-API downtime alerts
-
-High fraud-risk spikes
-
-Drift detection alerts
-
-Latency threshold breaches
-
-Alertmanager can forward alerts to:
-
-Slack
-
-PagerDuty
-
-Email
-
-📊 Example Metrics Exposed
-
-fraud_requests_total
-
-fraud_risk_score
-
-model_inference_latency_seconds
-
-api_errors_total
-
-🧠 Why This Project Is Impressive
-
-✔ End-to-end MLOps
-✔ Real-time inference
-✔ Monitoring + retraining loop
-✔ Model governance via MLflow
-✔ Recruiter-ready architecture
-
-🧪 Interview Talking Points
-
-Why risk scoring over binary classification
-
-How drift detection triggers retraining
-
-Why MLflow registry is critical
-
-Difference between offline vs online monitoring
-
-How Prometheus & Grafana fit into MLOps
-
-📌 Future Improvements
-
-Kafka streaming ingestion
-
-Redis online feature store
-
-Canary model deployment
+Horizontal scalability ready
 
 CI/CD with GitHub Actions
 
-Kubernetes deployment
+Docker CD pipeline to Docker Hub
 
-👤 Author
+
+⚙️ Tech Stack
+Layer	Technology
+API	FastAPI
+ML	LightGBM / XGBoost
+Container	Docker
+Orchestration	Kubernetes
+CI/CD	GitHub Actions
+Registry	Docker Hub
+Language	Python 3.10
+▶️ Running Locally (Without Kubernetes)
+pip install -r requirements.txt
+uvicorn app:app --reload
+
+
+Open:
+
+http://127.0.0.1:8000/docs
+
+🐳 Docker
+Build image
+docker build -t vaibhav61999/fraud-detection:latest .
+
+Run container
+docker run -p 8000:8000 vaibhav61999/fraud-detection:latest
+
+☸️ Kubernetes Deployment
+1️⃣ Start Kubernetes
+
+Docker Desktop → Enable Kubernetes
+or
+
+minikube start
+
+2️⃣ Deploy to cluster
+kubectl apply -f k8s/
+
+3️⃣ Verify resources
+kubectl get pods
+kubectl get svc
+
+4️⃣ Access API (Local Dev – Recommended)
+
+Due to NodePort limitations on Windows/macOS:
+
+kubectl port-forward svc/fraud-service 8000:80
+
+
+Open:
+
+http://localhost:8000/docs
+
+📈 Scalability (HPA)
+
+The system supports horizontal scaling using Kubernetes HPA:
+
+Minimum replicas: 2
+
+Scales based on CPU utilization
+
+Ready for traffic spikes
+
+🔄 CI/CD Pipeline
+Continuous Integration
+
+Code checkout
+
+Dependency installation
+
+Safe API import validation
+
+Prevents broken deployments
+
+Continuous Deployment
+
+Docker image build
+
+Container smoke test
+
+Push to Docker Hub automatically
+
+Author
 
 Vaibhav Tiwari
-AI / ML Engineer — MLOps focused
+AI / ML Engineer | MLOps-focused
 GitHub: https://github.com/tvaibhav619-web
+
+
+
+
 
